@@ -43,9 +43,17 @@ We will use make (and makefiles) in order to build out project. This makes it ea
 ## Executables
 Creating an executable is quite easy, we don't need to do anything special.
 
-## Dynamic link libraries (dll) / shared objects (so)
+## Libraries
+
+### Static libraries
+
+These libraries usually never reach the end user as they are embedded in the executable increasing its size.
+
+### Dynamic link libraries (dll) / shared objects (so)
 
 Usually when a application suite offers multiple executables when installed it is always a good thing to have the code shared between them, if needed. This can be achieved with DLLs/SOs. This is the basic use of DLLs, to avoid code redundancy.
+
+Depending on final deployment platform and limitations one can choose static or dynamic libraries depending on the particular scenario.
 
 ### DLL as shared code
 The simple way of using DLLs is by putting common thing into one place, and use them via a DLL (dynamic linking).
