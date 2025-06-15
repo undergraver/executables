@@ -6,15 +6,15 @@ NOTE: This is mainly thought as an example of using GNU Tools to develop applica
 ## Under Linux (or WSL under Windows)
 Just install these packages on your distribution (adapt `zypper` SUSE package manager to your distribution - for example in Ubuntu that is `apt`)
 
-`zypper install gcc gcc-c++ make gettext-tools`
+`zypper install gcc gcc-c++ make gettext-tools git`
 
 ## Under Windows
 
 1. Install Msys from here: https://www.msys2.org/
 2. Start the Msys shell and type this command: `pacman -S -y -u` (this upgrades the packages and updates the list of packages)
-3. Install the packages required for this repository: `pacman -S make gcc gettext`
+3. Install the packages required for this repository: `pacman -S make gcc gettext git`
 
-After these steps you will have install gcc/g++/make and gettext (used for L10N and I18N)
+After these steps you will have install gcc/g++/make and gettext (used for L10N and I18N) and git to clone this repo.
 
 Please note that `pacman` provides a lot of packages, libraries that can be used in development.
 Please mind that gcc offers multiple environment choices like presented here: https://www.msys2.org/docs/environments/
