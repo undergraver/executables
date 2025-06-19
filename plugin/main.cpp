@@ -101,7 +101,14 @@ static int get_option(void) {
 }
 
 static void handle_option(int op) {
-    //
+   op-=3; 
+   if (op >= loadedPlugins.size()) {
+	   fprintf(stderr,"Invalid option");
+   }
+   else {
+	   auto &p = loadedPlugins[op];
+	   p->action();
+   }
 }
 
 void loadPlugins() {
