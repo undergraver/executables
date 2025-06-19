@@ -92,7 +92,7 @@ static int get_option(void) {
     for (size_t i=0;i<loadedPlugins.size();++i) {
         char c = '3'+i;
 	auto & p = loadedPlugins[i];
-	printf("%c) execute %s plugin (%s)\n",c,p->plugin_name.c_str(),p->so_path.c_str());
+	printf("%c) execute %s (%s)\n",c,p->plugin_name.c_str(),p->so_path.c_str());
     }
     printf("Select: ");
     int option = 0;
