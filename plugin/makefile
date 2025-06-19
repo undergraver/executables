@@ -16,6 +16,9 @@ plugins_ok: $(PLUGIN_DIR)
 	gcc -shared $(LIB_FLAGS) -o $(PLUGIN_DIR)/lib2.so p2.c
 
 plugins_bad: $(PLUGIN_DIR)
+	gcc -shared $(LIB_FLAGS) -o $(PLUGIN_DIR)/libnosym.so nosym.c
+	gcc -shared $(LIB_FLAGS) -o $(PLUGIN_DIR)/libonesym.so onesym.c
+	touch $(PLUGIN_DIR)/libempty.so
 
 # we compile them with c++ with no consideration
 plugins_mangled: $(PLUGIN_DIR)
