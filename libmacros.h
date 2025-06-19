@@ -9,3 +9,10 @@
 #else
   #define DECL_API
 #endif
+
+
+#ifdef __cplusplus
+#define DEMANGLE extern "C"
+#else
+#define DEMANGLE
+#endif

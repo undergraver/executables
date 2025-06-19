@@ -20,8 +20,12 @@ plugins_bad: $(PLUGIN_DIR)
 	gcc -shared $(LIB_FLAGS) -o $(PLUGIN_DIR)/libonesym.so onesym.c
 	touch $(PLUGIN_DIR)/libempty.so
 
+plugins_extra: plugins_mangled plugins_demangled
+
 # we compile them with c++ with no consideration
 plugins_mangled: $(PLUGIN_DIR)
+	g++ -shared $(LIB_FLAGS) -o $(PLUGIN_DIR)/libmangled.so mangled.cpp
 
 # we compile them with c++ but more careful
-plugins_unmangled: $(PLUGIN_DIR)
+plugins_demangled: $(PLUGIN_DIR)
+	g++ -shared $(LIB_FLAGS) -I.. -o $(PLUGIN_DIR)/libdemangled.so demangled.cpp
