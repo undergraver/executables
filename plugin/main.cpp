@@ -1,4 +1,5 @@
 #include <dirent.h>
+#include <errno.h>
 #include <dlfcn.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,12 +17,13 @@ static int has_so_suffix(const char *name) {
 
 #define PLUGINS_DIR "./plugins"
 
-vector<string> getPlugins() {
+vector<string> getPluginPaths() {
     vector<string> paths;
     const char *dir_path = PLUGINS_DIR;
     DIR *dir = opendir(dir_path);
     if (!dir) {
-        perror("opendir");
+        const char *err = strerror(errno); 
+	fprintf(stderr,"Dir %s couldn't be open:%s\n",dir_path,err);
         return paths;
     }
 
@@ -32,6 +34,7 @@ vector<string> getPlugins() {
 
         char fullpath[PATH_MAX];
         snprintf(fullpath, sizeof(fullpath), "%s/%s", dir_path, ent->d_name);
+	printf("Adding %s\n",fullpath);
 	paths.push_back(fullpath);
     }
 
@@ -44,14 +47,23 @@ struct plugin {
     string plugin_name;
     typedef void (*action_fn)(void);
     action_fn action;
-    plugin(const string &so_path) {
+    plugin(const string &so_path_) : so_path(so_path_) {
         handle = dlopen(so_path.c_str(),RTLD_LAZY);
 	if (handle != NULL) {
 		name = (name_fn)dlsym(handle,"name");
 		if (name != NULL) {
 			plugin_name = name();
 		}
+		else {
+			fprintf(stderr, "couldn't resolve 'name' symbol:%s\n",dlerror());
+		}
 		action = (action_fn)dlsym(handle,"action");
+		if (action == NULL) {
+			fprintf(stderr, "couldn't resolve 'action' symbol:%s\n",dlerror());
+		}
+	}
+	else {
+		fprintf(stderr, "library couldn't be loaded:%s\n",dlerror());
 	}
     }
     ~plugin() {
@@ -97,7 +109,7 @@ void loadPlugins() {
 	for (auto p : loadedPlugins) {
 		delete p;
 	}
-	auto libs = getPlugins();
+	auto libs = getPluginPaths();
 	for(auto& lib : libs) {
 		auto p = new plugin(lib);
 		if (p->isValid()) {
