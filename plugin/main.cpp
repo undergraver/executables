@@ -116,6 +116,7 @@ void loadPlugins() {
 	for (auto p : loadedPlugins) {
 		delete p;
 	}
+	loadedPlugins.clear();
 	auto libs = getPluginPaths();
 	for(auto& lib : libs) {
 		auto p = new plugin(lib);
