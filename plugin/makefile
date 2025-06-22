@@ -9,7 +9,7 @@ clean:
 	rm -f $(MAIN) *.so a.out
 
 $(PLUGIN_DIR):
-	mkdir $(PLUGIN_DIR)
+	mkdir -p $(PLUGIN_DIR)
 
 plugins_ok: $(PLUGIN_DIR)
 	gcc -shared $(LIB_FLAGS) -o $(PLUGIN_DIR)/lib1.so p1.c

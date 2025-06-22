@@ -1,6 +1,7 @@
 include ../general.make
 STATIC_LIB=libcommon.a
 DYNAMIC_LIB=$(DLL_PREFIX)common$(DLL_EXTENSION)
+IMPLIB=$(DYNAMIC_LIB).a
 COMMON_OBJ=common.o
 
 all: static dynamic
@@ -14,7 +15,7 @@ $(COMMON_OBJ): common.c common.h
 dynamic: $(DYNAMIC_LIB)
 
 $(DYNAMIC_LIB): $(COMMON_OBJ)
-	gcc -shared $(COMMON_OBJ) -o $(DYNAMIC_LIB)
+	gcc -shared $(COMMON_OBJ) -o $(DYNAMIC_LIB) -Wl,--out-implib,$(IMPLIB)
 
 clean:
 	rm -f $(COMMON_OBJ) $(STATIC_LIB) $(DYNAMIC_LIB)
