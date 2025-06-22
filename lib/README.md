@@ -81,3 +81,49 @@ To see the symbols from this library you can use the following `binutils` execut
 * strings
 
 If you are looking for a visual tool you have this under Windows: https://github.com/lucasg/Dependencies
+
+Examples of using these tools:
+```
+$ nm common.dll | grep -E "common[0-9]+" | head
+0000000575991030 T common0
+000000057599103b T common1
+000000057599109e T common10
+000000057599147c T common100
+0000000575991487 T common101
+0000000575991492 T common102
+000000057599149d T common103
+00000005759914a8 T common104
+00000005759914b3 T common105
+00000005759914be T common106
+$
+```
+Here we can see the functions defined in the dll file. The same can be achieved with `objdump`
+```
+$ objdump -t common.dll | grep -E "common[0-9]+" | head
+[ 19](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 1) 0x0000000000000030 common0
+[ 21](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x000000000000003b common1
+[ 22](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x0000000000000046 common2
+[ 23](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x0000000000000051 common3
+[ 24](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x000000000000005c common4
+[ 25](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x0000000000000067 common5
+[ 26](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x0000000000000072 common6
+[ 27](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x000000000000007d common7
+[ 28](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x0000000000000088 common8
+[ 29](sec  1)(fl 0x00)(ty   20)(scl   2) (nx 0) 0x0000000000000093 common9
+
+```
+or with `strings`
+
+$ strings common.dll | grep -E "common[0-9]+" | head
+common0
+common1
+common10
+common100
+common101
+common102
+common103
+common104
+common105
+common106
+$
+```
